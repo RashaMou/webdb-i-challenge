@@ -15,4 +15,18 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:id", (req, res) => {
+  knex
+    .select("*")
+    .from("accounts")
+    .where({ id: req.params.id })
+    .first()
+    .then(account => {
+      res.status(200).json(account);
+    })
+    .catch(error => {
+      res.status(500).json("Error retrieving account with specified id");
+    });
+});
+
 module.exports = router;
